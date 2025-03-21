@@ -6,5 +6,6 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/re
 RUN apk add python3 && \
 echo '#!/bin/sh' > ./launch.sh && \
 echo 'python3 ./app.py' >> ./launch.sh && \
+rm Dockerfile && \
 chmod +x ./launch.sh
 CMD [ "./launch.sh" ]
