@@ -69,4 +69,4 @@ def lookup_card_id_by_account(creditNumber):  # 从账户ID（通讯码）中检
     return call51api(lookup_card_id_by_account_api, data)['cardNo']
 
 # 使用 __all__ 控制暴露的资源
-__all__ = ["lookup_card_id_by_account", "show_message", "get_user_info"]  # 暴露外部资源
+__all__ = ["lookup_card_id_by_account", "show_message", "get_user_info",fake_mac_address]  # 暴露外部资源
