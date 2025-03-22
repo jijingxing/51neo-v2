@@ -1,4 +1,6 @@
 from school_api_lib import * #导入51校园API 逆向 BY:景
+import auth
+auth.auth() #完成认证
 user_info = get_user_info(  #通过卡ID获取用户信息
     lookup_card_id_by_account( #从账户ID（通讯码）中检索卡ID
         input("请输入通讯密码：")
