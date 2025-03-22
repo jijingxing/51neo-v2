@@ -22,44 +22,43 @@
 ### 安装步骤
 
 1. 克隆该项目：
-    ```bash
-        git clone https://github.com/jijingxing/51Neo-v2.git
-            cd 51Neo-V2
-                ```
+```bash
+git clone https://github.com/jijingxing/51Neo-v2.git
+cd 51Neo-V2
+```
 
-                2. 安装依赖：
-                    ```bash
-                        pip install -r requirements.txt
-                            ```
+2. 安装依赖：
+```bash
+pip install -r requirements.txt
+```
 
-                            3. 启动后端服务：
-                                ```bash
-                                    chmod +x ./launch.sh
-                                        ./launch.sh
-                                            ```
+3. 启动后端服务：
+```bash
+python3 app.py
+```
 
-                                            4. 默认情况下，服务将在`http://localhost:8000`启动，您可以通过浏览器或API客户端访问。
+4. 默认情况下，服务将在`http://localhost:8000`启动，您可以通过浏览器或API客户端访问。
 
-                                            ## 使用说明
+## 使用说明
 
-                                            1. 打开浏览器，访问`http://localhost:8000`，您将看到51Neo UI界面。
-                                            2. 在UI中，您可以查看与51school平台相关的各种数据（例如大头照，学生信息等）。
-                                            3. 该项目的API端点允许用户请求和获取51school的数据（详细的API文档将在后续版本中提供）。
+1. 打开浏览器，访问`http://localhost:8000`，您将看到51Neo WebUI界面。
+2. 在WebUI中，您可以查看与51school平台相关的各种数据（例如大头照，学生信息等）。
+3. 该项目的API端点允许用户请求和获取51school的数据（详细的API文档将在后续版本中提供）。
 
-                                            ## 警告
+## 警告
 
-                                            **请注意**，该项目仅为概念演示和技术研究目的而设计，任何恶意使用都可能对51school平台和其他用户造成危害。请勿滥用此工具，确保遵守平台的使用协议与道德规范。
+**请注意**，该项目仅为概念演示和技术研究目的而设计，任何恶意使用都可能对51school平台和其他用户造成危害。请勿滥用此工具，确保遵守平台的使用协议与道德规范。
 
-                                            ### 切勿将本项目用于任何非法或破坏性的活动。我们对因滥用本项目而导致的任何后果不承担责任。
+### 切勿将本项目用于任何非法或破坏性的活动。我们对因滥用本项目而导致的任何后果不承担责任。
 
-                                            ## 贡献
+## 贡献
 
-                                            如果您有兴趣参与该项目，欢迎提交Issue或Pull Request。
+如果您有兴趣参与该项目，欢迎提交Issue或Pull Request。
 
-                                            ## 许可协议
+## 许可协议
 
-                                            该项目遵循[MIT许可证](LICENSE)。
+该项目遵循[MIT许可证](LICENSE)。
 
-                                            ---
+---
 
-                                            **免责声明**：该项目与51school官方无关，所有与51school相关的名称和标志均为其版权所有。
+**免责声明**：该项目与51school官方无关，所有与51school相关的名称和标志均为其版权所有。
