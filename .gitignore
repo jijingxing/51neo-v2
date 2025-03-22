@@ -3,6 +3,7 @@
 __pycache__/
 *.pyo
 *.pyd
+.venv
 
 # 环境文件
 .env
