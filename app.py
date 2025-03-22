@@ -4,7 +4,6 @@ import school_api_lib
 import urllib.request
 import urllib.error
 from urllib.parse import urljoin
-from dotenv import load_dotenv
 import auth
 
 auth.auth() #完成认证
