@@ -1,3 +1,16 @@
-__pycache__/
+# Python
 *.pyc
+__pycache__/
 *.pyo
+*.pyd
+
+# 环境文件
+.env
+.env.*
+.env.local
+.env.development
+.env.production
+
+# IDE 配置（可选）
+.idea/
+.vscode/
