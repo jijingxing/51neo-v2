@@ -1,10 +1,10 @@
 import json
 import os
-import school_api_lib
+from libs import school_api_lib
 import urllib.request
 import urllib.error
 from urllib.parse import urljoin
-import auth
+from libs import auth
 
 auth.auth()  # 完成认证
 

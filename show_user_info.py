@@ -1,8 +1,10 @@
-from school_api_lib import (
+from libs import school_api_lib
+from libs.school_api_lib import (
     get_user_info,
     lookup_card_id_by_account,
 )  # 导入51校园API 逆向 BY:景
-import auth
+from libs import auth
+del school_api_lib
 
 auth.auth()  # 完成认证
 user_info = get_user_info(  # 通过卡ID获取用户信息
