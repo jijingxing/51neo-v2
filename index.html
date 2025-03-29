@@ -193,7 +193,7 @@ async function getUserInfo() {
         // 显示查询结果
         displayUserInfo(userInfo);
     } catch (error) {
-        alert('查询失败，请检查通讯码');
+        alert('无法连接到服务器');
         console.error(error);
     }
 }
@@ -236,7 +236,7 @@ function displayUserInfo(data) {
             <div><span>备注：</span>${data.remark || '无'}</div>
         `;
     } else {
-        alert('未能获取用户信息');
+        alert('未能获取用户信息，请检查通讯码');
     }
 }
 </script>
