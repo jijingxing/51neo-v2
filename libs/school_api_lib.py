@@ -13,6 +13,7 @@ cookies = "geli-yuser-cardno=e32a96592fcefea39e15843f85f5572f1859aa20f072129594a
 
 # 定义API地址
 api_intfapp = f"{api_base}intfapp/"
+one_intfapp = f"{api_base}one/"
 show_message_api = f"{api_intfapp}showpadmessage.do"
 show_user_info_api = f"{api_intfapp}user/showruserinfo.do"
 lookup_card_id_by_account_api = f"{api_intfapp}checkcreditnumber.do"
