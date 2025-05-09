@@ -3,6 +3,20 @@ from libs import auth,school_api_lib,get_db
 
 auth.auth()
 
+# 初始化用户信息缓存表
+with get_db.database_session() as cursor:
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS user_info_cache (
+            id INTEGER PRIMARY KEY,
+            uin TEXT NOT NULL,
+            name TEXT,
+            class_name TEXT,
+            task_data TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+
+
 #设置起始通讯码
 index_uin = "2000000"
 
