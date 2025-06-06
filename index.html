@@ -136,14 +136,14 @@
     <div class="form-group">
         <div class="option-group">
             <div class="option" id="uinlookup" onclick="selectOption(this)">通讯码查询</div>
-            <div class="option" onclick="selectOption(this)">名字查询</div>
-            <div class="option" onclick="selectOption(this)">UUID查询</div>
+            <div class="option" id="namesearch"onclick="selectOption(this)">名字查询</div>
+            <div class="option" id="uuidlookup" onclick="selectOption(this)">UUID查询</div>
         </div>
     </div>
 
     <div class="form-group">
-        <label for="code">请输入通讯码：</label>
-        <input type="text" id="code" placeholder="请输入通讯码" required>
+        <label for="code">请输入{type}：</label>
+        <input type="text" id="code" placeholder="请输入{type}" required>
     </div>
 
     <button class="btn" onclick="getUserInfo()">查询信息</button>
@@ -163,11 +163,24 @@
 </footer>
 
 <script>
+
+// 定义查询方式名称
+var searchTypeNames = ["通讯码", "名字", "UUID"]
+var searchTypes= ["uinlookup","namesearch","uuidlookup"]
+
+// 默认通讯码查询
+var currect_searchTypeName = searchTypeNames[0]
+var currect_searchType = 0
+
 // 选中选项时，添加蓝色下划线
 function selectOption(optionElement) {
     // 清除所有选项的选中状态
     const options = document.querySelectorAll('.option');
     options.forEach(option => option.classList.remove('selected'));
+
+    currect_searchType = searchTypes.indexOf(optionElement.id)
+    currect_searchTypeName = searchTypeNames[currect_searchType]
+    // alert(optionElement.id)
     
     // 为当前选中的选项添加蓝色底线
     optionElement.classList.add('selected');
@@ -236,7 +249,7 @@ function displayUserInfo(data) {
             <div><span>备注：</span>${data.remark || '无'}</div>
         `;
     } else {
-        alert('未能获取用户信息，请检查通讯码');
+        alert('未能获取用户信息，请检查' + currect_searchTypeName);
     }
 }
 </script>
