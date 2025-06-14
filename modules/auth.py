@@ -1,5 +1,5 @@
 import os
-from libs import school_api_lib
+from modules import school_api_lib
 from dotenv import load_dotenv
 
 env_file = ".env"
