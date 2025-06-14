@@ -118,3 +118,10 @@
         background-color: transparent;
         margin-top: auto; /* 确保页脚总是在页面底部 */
         }
+
+        #user-photo {
+        width: 319px;        /* 强制宽度 */
+        height: 480px;       /* 强制高度 */
+        object-fit: cover;   /* 关键属性：裁剪多余部分保持比例 */
+        }
+
