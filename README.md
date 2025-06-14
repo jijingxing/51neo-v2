@@ -8,7 +8,7 @@
 
 ### 特点
 
-- **全新Python后端**：V2版本完全重写了后端，采用了Python技术，提升了代码可维护性与稳定性。
+- **全新Python后端**：V2版本完全重写了后端，采用了Python编写，提升了代码可维护性与稳定性。
 - **逆向API获取数据**：通过逆向API接口，获取51school上的学生数据与其他相关信息。
 - **概念演示**：本项目仅用于概念验证和学习交流，不应用于商业化或者恶意用途。
 
@@ -18,6 +18,10 @@
 
 - Python 3.8及以上
 - 必要的Python库（可以通过`requirements.txt`文件安装）
+```
+dotenv==0.9.9
+python-dotenv==1.0.1
+```
 
 ### 安装步骤
 
@@ -27,17 +31,22 @@ git clone https://github.com/jijingxing/51Neo-v2.git
 cd 51Neo-V2
 ```
 
-2. 安装依赖：
+2. 克隆该项目：
+```bash
+python3 -m venv .venv
+```
+
+3. 安装依赖：
 ```bash
 pip install -r requirements.txt
 ```
 
-3. 启动后端服务：
+4 启动后端服务：
 ```bash
 python3 app.py
 ```
 
-4. 默认情况下，服务将在`http://localhost:8000`启动，您可以通过浏览器或API客户端访问。
+5. 默认情况下，服务将在`http://localhost:8000`启动，您可以通过浏览器或API客户端访问。
 
 ## 使用说明
 
@@ -58,7 +67,11 @@ python3 app.py
 ## 许可协议
 
 该项目遵循[MIT许可证](LICENSE)。
+```
+MIT License
 
+Copyright (c) 2025 景
+```
 ---
 
 **免责声明**：该项目与51school官方无关，所有与51school相关的名称和标志均为其版权所有。
