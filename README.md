@@ -31,9 +31,10 @@ git clone https://github.com/jijingxing/51Neo-v2.git
 cd 51Neo-V2
 ```
 
-2. 克隆该项目：
+2. 创建虚拟环境：
 ```bash
 python3 -m venv .venv
+source .venv/bin/activate
 ```
 
 3. 安装依赖：
