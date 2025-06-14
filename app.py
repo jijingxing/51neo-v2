@@ -24,6 +24,8 @@ def serve_file(environ, start_response, file_path):
                 content_type = "text/plain"
             elif file_path.endswith(".json"):
                 content_type = "application/json"
+            elif file_path.endswith(".css"):
+                content_type = "text/css"
 
             status = "200 OK"
             headers = [("Content-type", content_type)]
@@ -42,26 +44,6 @@ def serve_file(environ, start_response, file_path):
     headers = [("Content-type", "text/plain")]
     start_response(status, headers)
     return [b"Not Found"]
-
-
-def simple_app(environ, start_response):
-    # 获取脚本所在目录
-    base_dir = os.path.dirname(os.path.abspath(__file__))  # 获取当前脚本所在的目录
-
-    # 获取请求路径
-    path = environ.get("PATH_INFO", "")
-
-    # 如果请求的是根目录（/），返回 index.html 文件
-    if path == "/":
-        file_path = os.path.join(base_dir, "index.html")
-        return serve_file(environ, start_response, file_path)
-
-    # 如果请求的是其他文件，拼接文件路径
-    safe_path = os.path.normpath(path.lstrip("/"))  # 移除路径中的多余斜杠，并规范化路径
-    file_path = os.path.join(base_dir, safe_path)  # 拼接脚本所在目录和请求的文件路径
-
-    # 调用 serve_file 函数来返回文件
-    return serve_file(environ, start_response, file_path)
 
 
 def uinlookup_handler(environ):
@@ -144,7 +126,6 @@ def forward_uimages_request(environ, start_response):
     if path.startswith("/uimages/"):
         # 构建转发的 URL
         new_url = urljoin("http://iapis.51school.com", path)
-
         # 移除 'Referer' 头
         headers = {
             key: value for key, value in environ.items() if key.startswith("HTTP_")
@@ -195,12 +176,16 @@ def app(environ, start_response):
         base_dir = os.path.dirname(os.path.abspath(__file__))  # 获取当前脚本所在的目录
         file_path = os.path.join(base_dir, "index.html")
         return serve_file(environ, start_response, file_path)
+    elif path == "/index.css":
+        base_dir = os.path.dirname(os.path.abspath(__file__))  # 获取当前脚本所在的目录
+        file_path = os.path.join(base_dir, "index.css")
+        return serve_file(environ, start_response, file_path)
 
-    # 默认返回简单的"Hello, World!"响应
-    status = "200 OK"
+    # 返回404
+    status = "404 Not Found"
     headers = [("Content-type", "text/plain")]
     start_response(status, headers)
-    return [b"51Neo-V2 Backend"]
+    return [b""]
 
 
 if __name__ == "__main__":
@@ -209,6 +194,7 @@ if __name__ == "__main__":
     # 创建一个WSGI服务器，绑定到8000端口
     httpd = make_server("", 8000, app)
     print("正在启动中...")
+    print("=" * 60)
     print(
         r"""______     _                           
 /\  ___\  /' \                          
@@ -217,7 +203,9 @@ if __name__ == "__main__":
   \/\ \L\ \ \ \ \/\ \/\ \/\  __//\ \ \ \
    \ \____/  \ \_\ \_\ \_\ \____\ \____/
     \/___/    \/_/\/_/\/_/\/____/\/___/ 
+
 欢迎使用51Neo          
 """
     )
+    print("=" * 60)
     httpd.serve_forever()
