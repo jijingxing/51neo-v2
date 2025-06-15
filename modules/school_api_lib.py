@@ -12,11 +12,11 @@ fake_mac_address = ""
 cookies = "geli-yuser-cardno=e32a96592fcefea39e15843f85f5572f1859aa20f072129594a3a4c144b7fab5ead4c00e7486fcd6;geli-session=7a6307b91acbc6855de60bd878f1a239;geli-yschool=eb9bf44e373fe980;geli-yuser=1191411"
 
 # 定义API地址
-api_intfapp = f"{api_base}intfapp/"
-one_intfapp = f"{api_base}one/"
-show_message_api = f"{api_intfapp}showpadmessage.do"
-show_user_info_api = f"{api_intfapp}user/showruserinfo.do"
-lookup_card_id_by_account_api = f"{api_intfapp}checkcreditnumber.do"
+intfapp_api = f"{api_base}intfapp/"
+one_api = f"{api_base}one/"
+show_message_api = f"{intfapp_api}showpadmessage.do"
+show_user_info_api = f"{intfapp_api}user/showruserinfo.do"
+lookup_card_id_by_account_api = f"{intfapp_api}checkcreditnumber.do"
 
 # 构造headers字典
 headers = {
