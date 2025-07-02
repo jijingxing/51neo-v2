@@ -28,7 +28,7 @@ python-dotenv==1.0.1
 1. 克隆该项目：
 ```bash
 git clone https://github.com/jijingxing/51Neo-v2.git
-cd 51Neo-V2
+cd 51Neo-v2
 ```
 
 2. 创建虚拟环境：
