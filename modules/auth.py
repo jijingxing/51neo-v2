@@ -13,10 +13,16 @@ def create_env():
 
 
 def auth():
-    # 检查 .env 文件是否存在
-    if not os.path.exists(env_file):
-        create_env()
+    # 优先从系统环境变量中读取 mac
+    mac = os.getenv("mac")
 
-    # 加载环境变量
-    load_dotenv(env_file)
-    school_api_lib.fake_mac_address = os.getenv("mac")
+    if mac is None:
+        if os.path.exists(env_file):
+            load_dotenv(env_file)
+            mac = os.getenv("mac")
+
+    if mac is None:
+        print("")
+        create_env()
+        mac = os.getenv("mac")  # 再次尝试读取
+    school_api_lib.fake_mac_address = mac
