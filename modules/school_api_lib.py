@@ -9,7 +9,7 @@ api_base = "https://iapis.51school.com/"
 fake_mac_address = ""
 
 # 设置Cookies来进行登录
-cookies = "geli-yuser-cardno=e32a96592fcefea39e15843f85f5572f1859aa20f072129594a3a4c144b7fab5ead4c00e7486fcd6;geli-session=7a6307b91acbc6855de60bd878f1a239;geli-yschool=eb9bf44e373fe980;geli-yuser=1191411"
+cookies = ""
 
 # 定义API地址
 intfapp_api = f"{api_base}intfapp/"
