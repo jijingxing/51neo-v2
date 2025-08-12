@@ -9,7 +9,7 @@ def create_env():
     with open(env_file, "w") as f:
         mac = input("请输入51校园Mac地址: ")
 
-        f.write(f"MCX={mac}\n")
+        f.write(f"MAC={mac}\n")
 
 
 def auth():
