@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="/index.css">
+    <title>51Neo-V2</title>
+</head>
+<body>
+
+<div class="container">
+    <h1>51Neo-V2</h1>
+
+    <!-- 新增的横排单列选项 -->
+    <div class="form-group">
+        <div class="option-group">
+            <div class="option" id="uinlookup" onclick="selectOption(this)">通讯码查询</div>
+            <div class="option" id="namesearch"onclick="selectOption(this)">名字查询</div>
+            <div class="option" id="uuidlookup" onclick="selectOption(this)">UUID查询</div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="code" id="tip">请输入通讯码：</label>
+        <input type="text" id="code" placeholder="请输入通讯码：" required>
+    </div>
+
+    <button class="btn" onclick="getUserInfo()">查询信息</button>
+
+    <div class="result" id="result">
+        <img id="user-photo" src="" alt="大头照">
+        <p class="name" id="user-name"></p>
+
+        <!-- 使用grid布局显示用户信息 -->
+        <div class="user-info" id="user-info"></div>
+    </div>
+</div>
+
+<footer>
+    <p>仅用于技术交流，不对一切可能的滥用负责任。</p>
+    <p>&copy; Copyright 2025 鸡景行. All rights reserved.</p>
+</footer>
+
+<script>
+
+// 定义查询方式名称
+var searchTypeNames = ["通讯码", "名字", "UUID"]
+var searchTypes= ["uinlookup","namesearch","uuidlookup"]
+
+// 默认通讯码查询
+var currect_searchTypeName = searchTypeNames[0]
+var currect_searchType = 0
+
+// 选中选项时，添加蓝色下划线
+function selectOption(optionElement) {
+    // 清除所有选项的选中状态
+    const options = document.querySelectorAll('.option');
+    options.forEach(option => option.classList.remove('selected'));
+
+    currect_searchType = searchTypes.indexOf(optionElement.id)
+    currect_searchTypeName = searchTypeNames[currect_searchType]
+    // alert(optionElement.id)
+    
+    document.getElementById("tip").innerHTML = `请输入${currect_searchTypeName}：`;
+    document.getElementById("code").placeholder = `请输入${currect_searchTypeName}：`;
+    // 为当前选中的选项添加蓝色底线
+    optionElement.classList.add('selected');
+}
+
+// 页面加载时默认选择uinlookup
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('uinlookup').classList.add('selected');
+});
+
+// 调用后端API获取用户信息
+async function getUserInfo() {
+    const code = document.getElementById('code').value;
+
+    // 通过通讯码查询卡ID
+    try {
+        const userInfo = await getUserInfoFromUin(code);
+
+//       const cardId = await lookupCardIdByAccount(code);
+        // 查询用户详细信息
+//        const userInfo = await getUserInfoFromApi(cardId);
+
+        // 显示查询结果
+        displayUserInfo(userInfo);
+    } catch (error) {
+        alert('无法连接到服务器');
+        console.error(error);
+    }
+}
+
+// 根据uin获取用户详细信息
+async function getUserInfoFromUin(uin) {
+    const response = await fetch('/api/uinlookup', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            uin: uin
+        })
+    });
+
+    const data = await response.json();
+    return data;
+}
+  
+// 显示用户信息
+function displayUserInfo(data) {
+    if (data.statusCode === 200) {
+        document.getElementById('result').style.display = 'block';
+
+        // 用户头像
+        document.getElementById('user-photo').src = data.picUrl;
+
+        // 用户名字
+        document.getElementById('user-name').textContent = data.name;
+
+        // 用户详细信息
+        const userInfoDiv = document.getElementById('user-info');
+        userInfoDiv.innerHTML = `
+            <div><span>班级：</span>${data.classes}</div>
+            <div><span>年级：</span>${data.yearClass}</div>
+            <div><span>外宿生类型：</span>${data.tacticsType}</div>
+            <div><span>考勤分组：</span>${data.board}</div>
+            <div><span>学籍状态：</span>${data.cardStatus}</div>
+            <div><span>备注：</span>${data.remark || '无'}</div>
+        `;
+    } else {
+        alert('未能获取用户信息，请检查' + currect_searchTypeName);
+    }
+}
+</script>
+
+</body>
+</html>
