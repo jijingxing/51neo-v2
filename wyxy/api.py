@@ -70,5 +70,4 @@ __all__ = [
     "lookup_card_id_by_account",
     "show_message",
     "get_user_info",
-    fake_mac_address,
 ]  # 暴露外部资源
