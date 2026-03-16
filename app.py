@@ -7,7 +7,7 @@ import urllib.error
 from urllib.parse import urljoin
 from modules import auth
 
-auth.auth()  # 完成认证
+#auth.auth()  # 完成认证
 
 
 def serve_file(environ, start_response, file_path):
