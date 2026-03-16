@@ -1,7 +1,7 @@
 #!/bin/env python3
 import json
 import os
-from modules import school_api_lib
+import wyxy
 import urllib.request
 import urllib.error
 from urllib.parse import urljoin
@@ -67,8 +67,8 @@ def uinlookup_handler(environ):
 
             if uin:
                 # 如果提供了uin参数，调用51校园API来获取数据
-                user_info = school_api_lib.get_user_info(
-                    school_api_lib.lookup_card_id_by_account(uin)
+                user_info = wyxy.get_user_info(
+                    wyxy.lookup_card_id_by_account(uin)
                 )
                 response = user_info
             else:
@@ -174,11 +174,11 @@ def app(environ, start_response):
     # 如果请求的是根目录（/），返回 index.html 文件
     path = environ.get("PATH_INFO", "")
     if path == "/":
-        base_dir = os.path.dirname(os.path.abspath(__file__))  # 获取当前脚本所在的目录
+        base_dir = os.path.dirname(os.path.abspath(__file__))+"/webui"  # 获取当前脚本所在的目录
         file_path = os.path.join(base_dir, "index.html")
         return serve_file(environ, start_response, file_path)
     elif path == "/index.css":
-        base_dir = os.path.dirname(os.path.abspath(__file__))  # 获取当前脚本所在的目录
+        base_dir = os.path.dirname(os.path.abspath(__file__))+"/webui"  # 获取当前脚本所在的目录
         file_path = os.path.join(base_dir, "index.css")
         return serve_file(environ, start_response, file_path)
 
