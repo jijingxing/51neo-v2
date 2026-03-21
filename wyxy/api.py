@@ -5,7 +5,7 @@ from . import config
 import httpx
 
 # 获取配置
-config = APIConfig.from_env()
+config = config.APIConfig.from_env()
 
 # 定义API地址
 api_base = "https://iapis.51school.com/"
