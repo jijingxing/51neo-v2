@@ -1,6 +1,10 @@
 import urllib.request
 import urllib.parse
 import json
+import .config
+
+# 获取配置
+config = APIConfig.from_env()
 
 # 定义API地址
 api_base = "https://iapis.51school.com/"
@@ -20,7 +24,7 @@ lookup_card_id_by_account_api = f"{intfapp_api}checkcreditnumber.do"
 
 # 构造headers字典
 headers = {
-    "Cookie": cookies,
+    "Cookie": config.cookies,
     "accept": "application/json, text/plain, */*",
     "accept-language": "zh-CN,zh;q=0.9",
     "content-type": "application/x-www-form-urlencoded",
