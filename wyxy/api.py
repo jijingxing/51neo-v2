@@ -3,7 +3,7 @@ import urllib.parse
 import json
 from . import config
 import httpx
-
+import warning
 # 获取配置
 config = config.APIConfig.from_env()
 
