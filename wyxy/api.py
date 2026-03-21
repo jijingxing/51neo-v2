@@ -2,6 +2,7 @@ import urllib.request
 import urllib.parse
 import json
 import .config
+import httpx
 
 # 获取配置
 config = APIConfig.from_env()
@@ -12,8 +13,7 @@ api_base = "https://iapis.51school.com/"
 # 使用伪造的MAC地址以绕过检测
 fake_mac_address = ""
 
-# 设置Cookies来进行登录
-cookies = ""
+
 
 # 定义API地址
 intfapp_api = f"{api_base}intfapp/"
@@ -40,8 +40,8 @@ headers = {
     "x-user-agent": "appwebkit",
 }
 
-
-def call51api(url, data):  # 修改为接收data参数
+# 遗留函数
+def call51api_legacy(url, data):  # 修改为接收data参数
     # 将data编码成URL编码格式，并转换为字节类型
     data = urllib.parse.urlencode(data).encode()
 
@@ -56,17 +56,17 @@ def call51api(url, data):  # 修改为接收data参数
 
 def show_message(cardid):
     data = {"mac": fake_mac_address, "CardID": cardid}
-    return call51api(show_message_api, data)
+    return call51api_legacy(show_message_api, data)
 
 
 def get_user_info(cardid):  # 通过卡ID检索用户信息
     data = {"mac": fake_mac_address, "cardNo": cardid}
-    return call51api(show_user_info_api, data)
+    return call51api_legacy(show_user_info_api, data)
 
 
 def lookup_card_id_by_account(creditNumber):  # 从账户ID（通讯码）中检索卡ID
     data = {"mac": fake_mac_address, "creditNumber": "@" + str(creditNumber)}
-    return call51api(lookup_card_id_by_account_api, data)["cardNo"]
+    return call51api_legacy(lookup_card_id_by_account_api, data)["cardNo"]
 
 
 # 使用 __all__ 控制暴露的资源
