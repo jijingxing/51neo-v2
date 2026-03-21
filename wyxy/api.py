@@ -44,8 +44,8 @@ def call51api_legacy(url, data):
         "call51api_legacy 已弃用，请改用 httpx.post",
         DeprecationWarning,
         stacklevel=2
-    )
-    with httpx.Client() as client:
+     )
+     with httpx.Client() as client:
         response = client.post(url, data=data)
         return response.json()
 
