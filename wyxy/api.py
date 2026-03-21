@@ -1,7 +1,7 @@
 import urllib.request
 import urllib.parse
 import json
-import .config
+from . import config
 import httpx
 
 # 获取配置
