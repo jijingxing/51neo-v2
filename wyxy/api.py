@@ -13,8 +13,6 @@ api_base = "https://iapis.51school.com/"
 # 使用伪造的MAC地址以绕过检测
 fake_mac_address = ""
 
-
-
 # 定义API地址
 intfapp_api = f"{api_base}intfapp/"
 one_api = f"{api_base}one/"
@@ -41,18 +39,10 @@ headers = {
 }
 
 # 遗留函数
-def call51api_legacy(url, data):  # 修改为接收data参数
-    # 将data编码成URL编码格式，并转换为字节类型
-    data = urllib.parse.urlencode(data).encode()
-
-    # 创建请求对象
-    req = urllib.request.Request(url, data=data, headers=headers, method="POST")
-
-    # 发送请求并获取响应
-    with urllib.request.urlopen(req) as response:
-        response_data = response.read()  # 获取响应内容
-        return json.loads(response_data.decode("utf-8"))  # 假设返回的内容是JSON格式
-
+def call51api_legacy(url, data):
+    with httpx.Client() as client:
+        response = client.post(url, data=data)
+        return response.json()
 
 def show_message(cardid):
     data = {"mac": fake_mac_address, "CardID": cardid}
