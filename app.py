@@ -9,6 +9,8 @@ from urllib.parse import urljoin
 
 #auth.auth()  # 完成认证
 
+APIConfig = wyxy.config.APIConfig()
+#APIConfig.cookie=f'geli-session={wyxy.session.get_session("18177756608")}'
 
 def serve_file(environ, start_response, file_path):
     # 确保文件存在
@@ -67,10 +69,10 @@ def uinlookup_handler(environ):
 
             if uin:
                 # 如果提供了uin参数，调用51校园API来获取数据
-                user_info = wyxy.get_user_info(
-                    wyxy.lookup_card_id_by_account(uin)
-                )
-                response = user_info
+                #user_info = wyxy.get_user_info(
+                    #wyxy.lookup_card_id_by_account(uin)
+                #)
+                response = {"classes":"初2401班","remark":"","message":"查询成功","yearClass":"初二","picUrl":"/uimages/h/2021/09/01/681cb589-a316-45f1-b3d3-613fd5771a3c_600x800.png","name":"黄振超","isTeacher":True,"id":949382,"tacticsType":"","board":"老师","cardStatus":"未发卡","statusCode":200}
             else:
                 # 如果没有提供uin参数，返回错误
                 response = {"status": "error", "message": "UIN parameter is missing"}
@@ -180,6 +182,10 @@ def app(environ, start_response):
     elif path == "/index.css":
         base_dir = os.path.dirname(os.path.abspath(__file__))+"/webui"  # 获取当前脚本所在的目录
         file_path = os.path.join(base_dir, "index.css")
+        return serve_file(environ, start_response, file_path)
+    elif path == "/old.html":
+        base_dir = os.path.dirname(os.path.abspath(__file__))+"/webui"  # 获取当前脚本所在的目录
+        file_path = os.path.join(base_dir, "old.html")
         return serve_file(environ, start_response, file_path)
 
     # 返回404

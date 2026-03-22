@@ -4,8 +4,9 @@ import json
 from . import config
 import httpx
 import warnings
+
 # 获取配置
-config = config.APIConfig.from_env()
+apiconfig = config.APIConfig.from_env()
 
 # 定义API地址
 api_base = "https://iapis.51school.com/"
@@ -22,7 +23,6 @@ lookup_card_id_by_account_api = f"{intfapp_api}checkcreditnumber.do"
 
 # 构造headers字典
 headers = {
-    "Cookie": config.cookies,
     "accept": "application/json, text/plain, */*",
     "accept-language": "zh-CN,zh;q=0.9",
     "content-type": "application/x-www-form-urlencoded",
@@ -46,7 +46,7 @@ def call51api_legacy(url, data):
         stacklevel=2
      )
      with httpx.Client() as client:
-        response = client.post(url, data=data)
+        response = client.post(url, data=data,headers=headers)
         return response.json()
 
 def show_message(cardid):
@@ -63,10 +63,13 @@ def lookup_card_id_by_account(creditNumber):  # 从账户ID（通讯码）中检
     data = {"mac": fake_mac_address, "creditNumber": "@" + str(creditNumber)}
     return call51api_legacy(lookup_card_id_by_account_api, data)["cardNo"]
 
-
+def get_student_info(id):
+    resp = httpx.get(url=f"https://iapis.51school.com/one/yuser/liststudent.do?pageSize=1&r_userType=2&q_cn_id={id}",headers=headers,cookies=apiconfig.cookies)
+    return resp.json()
 # 使用 __all__ 控制暴露的资源
 __all__ = [
     "lookup_card_id_by_account",
     "show_message",
     "get_user_info",
+    "get_student_info",
 ]  # 暴露外部资源

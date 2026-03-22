@@ -1,11 +1,12 @@
 # config.py
+from dataclasses import dataclass, field
+from typing import Dict, Union
 import os
-from dataclasses import dataclass
 
 @dataclass
 class APIConfig:
     api_base: str = "https://iapis.51school.com/"
-    cookies: str = ""
+    cookies: Dict[str, str] = field(default_factory=dict)  # 改为字典
     timeout: int = 30
     
     _instance = None
