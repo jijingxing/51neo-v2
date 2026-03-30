@@ -10,7 +10,7 @@ from urllib.parse import urljoin
 #auth.auth()  # 完成认证
 
 APIConfig = wyxy.config.APIConfig()
-#APIConfig.cookie=f'geli-session={wyxy.session.get_session("18177756608")}'
+wyxy.session.auth("18177756608")
 
 def serve_file(environ, start_response, file_path):
     # 确保文件存在
@@ -72,7 +72,26 @@ def uinlookup_handler(environ):
                 #user_info = wyxy.get_user_info(
                     #wyxy.lookup_card_id_by_account(uin)
                 #)
-                response = {"classes":"初2401班","remark":"","message":"查询成功","yearClass":"初二","picUrl":"/uimages/h/2021/09/01/681cb589-a316-45f1-b3d3-613fd5771a3c_600x800.png","name":"黄振超","isTeacher":True,"id":949382,"tacticsType":"","board":"老师","cardStatus":"未发卡","statusCode":200}
+                ud = wyxy.get_student_info(uin)
+                # 获取学生信息
+
+                # 直接取值填充模板
+                response = {
+                    "classes": ud['data']['items'][0]['yclassesName'],
+                    "remark": "",
+                    "message": "查询成功",
+                    "yearClass": ud['data']['items'][0]['yyearclassName'],
+                    "picUrl": ud['data']['items'][0]['yuseraccountPicurl'],
+                    "name": ud['data']['items'][0]['name'],
+                    "isTeacher": ud['data']['items'][0]['userType'] == 1,
+                    "id": ud['data']['items'][0]['id'],
+                    "tacticsType": ud['data']['items'][0]['tacticsTypeDesc'],
+                    "board": ud['data']['items'][0]['isBoardDesc'],
+                    "cardStatus": "已发卡" if ud['data']['items'][0]['picStatusDesc'] == '完成' else "未发卡",
+                    "statusCode": 200
+                 }
+                
+                print(response)
             else:
                 # 如果没有提供uin参数，返回错误
                 response = {"status": "error", "message": "UIN parameter is missing"}
