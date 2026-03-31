@@ -68,10 +68,15 @@ def get_student_info(id):
     student = Student(**resp.json()["data"]["items"][0])
     if student.id == id:
         return student
+def get_student_info_byname(name):
+    resp = httpx.get(url=f"https://iapis.51school.com/one/yuser/liststudent.do?pageSize=1&r_userType=2&r_name={name}",headers=headers,cookies=apiconfig.cookies)
+    student = Student(**resp.json()["data"]["items"][0])
+    return student
 # 使用 __all__ 控制暴露的资源
 __all__ = [
     "lookup_card_id_by_account",
     "show_message",
     "get_user_info",
     "get_student_info",
+    "get_student_info_byname",
 ]  # 暴露外部资源
