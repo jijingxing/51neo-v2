@@ -65,7 +65,9 @@ def lookup_card_id_by_account(creditNumber):  # 从账户ID（通讯码）中检
 
 def get_student_info(id):
     resp = httpx.get(url=f"https://iapis.51school.com/one/yuser/liststudent.do?pageSize=1&r_userType=2&q_cn_id={id}",headers=headers,cookies=apiconfig.cookies)
-    return Student(**resp.json()["data"]["items"][0])
+    student = Student(**resp.json()["data"]["items"][0])
+    if student.id == id:
+        return student
 # 使用 __all__ 控制暴露的资源
 __all__ = [
     "lookup_card_id_by_account",
