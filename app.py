@@ -105,6 +105,80 @@ def uinlookup_handler(environ):
     return response
 
 
+def v2_lookup_handler(environ):
+    # 处理 /api/v2/lookup 请求 - 统一查询接口
+    if environ["REQUEST_METHOD"] == "GET":
+        try:
+            # 解析查询参数
+            query_string = environ.get("QUERY_STRING", "")
+            params = urllib.parse.parse_qs(query_string)
+
+            query_type = params.get("type", [None])[0]
+            query_value = params.get("value", [None])[0]
+
+            if not query_type or not query_value:
+                return {"status": "error", "message": "Missing type or value parameter", "statusCode": 400}
+
+            if query_type == "id":
+                # 通过ID（通讯码）查询
+                result = wyxy.get_student_info(query_value)
+            elif query_type == "name":
+                # 通过名字查询
+                result = wyxy.get_student_info_byname(query_value)
+            else:
+                return {"status": "error", "message": f"Invalid query type: {query_type}", "statusCode": 400}
+
+            # 检查结果
+            if result is None:
+                return {"status": "error", "message": "Student not found", "statusCode": 404}
+
+            # 构建响应 - 统一格式
+            # 注意：这里假设result是Student对象，需要访问其属性
+            # 如果result是字典，需要调整访问方式
+            try:
+                # 尝试作为Student对象访问
+                response = {
+                    "classes": result.yclassesName,
+                    "remark": "",
+                    "message": "查询成功",
+                    "yearClass": result.yyearclassName,
+                    "picUrl": result.yuseraccountPicurl,
+                    "name": result.name,
+                    "isTeacher": result.userType == 1,
+                    "id": result.id,
+                    "tacticsType": result.tacticsTypeDesc,
+                    "board": result.isBoardDesc,
+                    "cardStatus": "已发卡" if result.picStatusDesc == '完成' else "未发卡",
+                    "statusCode": 200
+                }
+            except AttributeError:
+                # 如果result是字典（旧格式）
+                response = {
+                    "classes": result['data']['items'][0]['yclassesName'],
+                    "remark": "",
+                    "message": "查询成功",
+                    "yearClass": result['data']['items'][0]['yyearclassName'],
+                    "picUrl": result['data']['items'][0]['yuseraccountPicurl'],
+                    "name": result['data']['items'][0]['name'],
+                    "isTeacher": result['data']['items'][0]['userType'] == 1,
+                    "id": result['data']['items'][0]['id'],
+                    "tacticsType": result['data']['items'][0]['tacticsTypeDesc'],
+                    "board": result['data']['items'][0]['isBoardDesc'],
+                    "cardStatus": "已发卡" if result['data']['items'][0]['picStatusDesc'] == '完成' else "未发卡",
+                    "statusCode": 200
+                }
+
+            print(f"V2 Lookup: {query_type}={query_value}")
+            return response
+
+        except Exception as e:
+            # 异常处理
+            return {"status": "error", "message": str(e), "statusCode": 500}
+    else:
+        # 如果不是GET请求
+        return {"status": "error", "message": "Invalid request method", "statusCode": 405}
+
+
 def handle_api_request(environ, start_response):
     # 获取请求路径
     path = environ.get("PATH_INFO", "")
@@ -114,6 +188,23 @@ def handle_api_request(environ, start_response):
         if path == "/api/uinlookup":
             # 获取响应内容
             response = uinlookup_handler(environ)
+
+            # 设置响应头
+            status = "200 OK"
+            headers = [
+                ("Content-type", "application/json"),
+                ("Access-Control-Allow-Origin", "*"),
+                ("Access-Control-Allow-Methods", "GET, POST, OPTIONS"),
+                ("Access-Control-Allow-Headers", "Content-Type"),
+            ]
+            start_response(status, headers)
+
+            # 返回 JSON 响应
+            return [json.dumps(response, ensure_ascii=False).encode("utf-8")]
+
+        elif path == "/api/v2/lookup":
+            # 获取响应内容
+            response = v2_lookup_handler(environ)
 
             # 设置响应头
             status = "200 OK"
