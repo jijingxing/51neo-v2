@@ -15,3 +15,6 @@ __pycache__/
 # IDE 配置（可选）
 .idea/
 .vscode/
+
+# Claude Code 配置文件
+CLAUDE.md
