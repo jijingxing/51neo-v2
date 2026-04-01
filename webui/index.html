@@ -475,7 +475,7 @@
             updateTipIcon(currect_searchType);
         });
 
-        // 后端接口函数与display保持不变
+        // 后端接口函数 - 更新为使用v2 API
         async function getUserInfo() {
             const code = document.getElementById('code').value;
             if (!code) {
@@ -483,8 +483,8 @@
                 return;
             }
             try {
-                // 调用后端API (保留您原来的接口)
-                const userInfo = await getUserInfoFromUin(code);
+                // 调用v2 API
+                const userInfo = await getUserInfoFromV2(code);
                 displayUserInfo(userInfo);
             } catch (error) {
                 alert('无法连接到服务器');
@@ -492,11 +492,18 @@
             }
         }
 
-        async function getUserInfoFromUin(uin) {
-            const response = await fetch('/api/uinlookup', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ uin: uin })
+        async function getUserInfoFromV2(value) {
+            // 根据当前查询类型决定API参数
+            let queryType = "id"; // 默认通讯码查询
+            if (currect_searchType === 1) {
+                queryType = "name"; // 名字查询
+            }
+            // UUID查询暂不实现 (currect_searchType === 2)
+
+            const apiUrl = `/api/v2/lookup?type=${encodeURIComponent(queryType)}&value=${encodeURIComponent(value)}`;
+            const response = await fetch(apiUrl, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
             });
             return await response.json();
         }
